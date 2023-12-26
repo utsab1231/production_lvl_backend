@@ -20,7 +20,6 @@ const uploadToCloudinary = async (localFilePath) => {
 
     // will detect file type on its own
     if (response) {
-      console.log("File uploaded successfully", response.url);
       fs.unlinkSync(localFilePath); // will remove locally stored file after uploading
       return response;
     }

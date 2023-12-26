@@ -18,16 +18,31 @@ export const registerUser = asyncHandler(async (req, res) => {
   }
 
   // get local path of uploaded files
-  const avatarLocalPath = req.files?.avatar[0]?.path;
+  const avatarFile = req.files.avatar;
+  const coverImageFile = req.files.coverImage;
 
-  const coverImageLocalPath = req.files?.coverImage[0]?.path;
+  const avatarLocalPath =
+    avatarFile && avatarFile.length > 0 ? avatarFile[0].path : false;
 
+  const coverImageLocalPath =
+    coverImageFile && coverImageFile.length > 0
+      ? coverImageFile[0].path
+      : false;
+
+  // if no avatar is uploaded
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar is required");
   }
+  let coverImage;
+  // if no cover image is uploaded
+  if (!coverImageLocalPath) {
+    coverImage = "";
+  } else {
+    coverImage = await uploadToCloudinary(coverImageLocalPath);
+  }
+
   // upload files to cloudinary and get their urls
   const avatar = await uploadToCloudinary(avatarLocalPath);
-  const coverImage = await uploadToCloudinary(coverImageLocalPath);
 
   if (!avatar) {
     throw new ApiError(500, "Something went wrong while uploading avatar");
