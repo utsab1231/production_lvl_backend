@@ -3,9 +3,7 @@ import dbConfig from "./dbconfig/dbConfig.js";
 import app from "./app.js";
 
 // config function for environment variables
-dotenv.config({
-  path: "./.env",
-});
+dotenv.config();
 
 // config function for database connection
 dbConfig()
