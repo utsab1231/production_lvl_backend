@@ -36,8 +36,8 @@ export const loginAuth = asyncHandler(async (req, res, next) => {
   }
 });
 
-// ! ==================================logout auth middleware function ==========================>
-export const authLogout = asyncHandler(async (req, res, next) => {
+// ! ==================================verify jwt token ==========================>
+export const authJWT = asyncHandler(async (req, res, next) => {
   try {
     const acessToken =
       req.cookies?.accessToken || req.header("Authorization")?.split(" ")[1];
